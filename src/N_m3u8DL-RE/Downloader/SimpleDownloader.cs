@@ -33,7 +33,7 @@ namespace N_m3u8DL_RE.Downloader
         public async Task<DownloadResult?> DownloadSegmentAsync(MediaSegment segment, string savePath, SpeedContainer speedContainer, Dictionary<string, string>? headers = null)
         {
             var url = segment.Url;
-            var dResult = await DownClipAsync(url, savePath, speedContainer, segment.StartRange, segment.StopRange, headers, DownloaderConfig.MyOptions.DownloadRetryCount);
+            var dResult = await DownClipAsync(url, savePath, speedContainer, segment.StartRange, segment.StopRange, headers, DownloaderConfig.MyOptions.DownloadRetryCount, DownloaderConfig.MyOptions.DownloadRetryTimeout);
             if (dResult != null && dResult.Success && segment.EncryptInfo != null)
             {
                 if (segment.EncryptInfo.Method == EncryptMethod.AES_128)
@@ -76,7 +76,7 @@ namespace N_m3u8DL_RE.Downloader
             return dResult;
         }
 
-        private async Task<DownloadResult?> DownClipAsync(string url, string path, SpeedContainer speedContainer, long? fromPosition, long? toPosition, Dictionary<string, string>? headers = null, int retryCount = 3)
+        private async Task<DownloadResult?> DownClipAsync(string url, string path, SpeedContainer speedContainer, long? fromPosition, long? toPosition, Dictionary<string, string>? headers = null, int retryCount = 3, int retryTimeout = 1000)
         {
             CancellationTokenSource? cancellationTokenSource = null;
         retry:
@@ -133,7 +133,7 @@ namespace N_m3u8DL_RE.Downloader
                 Logger.Extra($"Ah oh!{Environment.NewLine}RetryCount => {retryCount}{Environment.NewLine}Exception  => {ex.Message}{Environment.NewLine}Url        => {url}");
                 if (retryCount-- > 0)
                 {
-                    await Task.Delay(1000);
+                    await Task.Delay(retryTimeout);
                     goto retry;
                 }
                 else

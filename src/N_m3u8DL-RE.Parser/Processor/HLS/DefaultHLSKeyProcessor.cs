@@ -66,6 +66,7 @@ namespace N_m3u8DL_RE.Parser.Processor.HLS
                 else if (!string.IsNullOrEmpty(uri))
                 {
                     var retryCount = parserConfig.KeyRetryCount;
+                    var retryTimeout = parserConfig.KeyRetryTimeout;
                     var segUrl = PreProcessUrl(ParserUtil.CombineURL(m3u8Url, uri), parserConfig);
                 getHttpKey:
                     try
@@ -76,7 +77,7 @@ namespace N_m3u8DL_RE.Parser.Processor.HLS
                     catch (Exception _ex) when (!_ex.Message.Contains("scheme is not supported."))
                     {
                         Logger.WarnMarkUp($"[grey]{_ex.Message.EscapeMarkup()} retryCount: {retryCount}[/]");
-                        Thread.Sleep(1000);
+                        Thread.Sleep(retryTimeout);
                         if (retryCount-- > 0) goto getHttpKey;
                         else throw;
                     }

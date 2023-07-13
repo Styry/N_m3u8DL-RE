@@ -64,5 +64,9 @@ namespace N_m3u8DL_RE.Parser.Config
         /// KEY重试次数
         /// </summary>
         public int KeyRetryCount { get; set; } = 3;
+        /// <summary>
+        /// KEY Waits
+        /// </summary>
+        public int KeyRetryTimeout { get; set; } = 1000;
     }
 }

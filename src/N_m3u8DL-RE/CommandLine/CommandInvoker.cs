@@ -41,6 +41,7 @@ namespace N_m3u8DL_RE.CommandLine
         private readonly static Option<bool> SubOnly = new(new string[] { "--sub-only" }, description: ResString.cmd_subOnly, getDefaultValue: () => false);
         private readonly static Option<int> ThreadCount = new(new string[] { "--thread-count" }, description: ResString.cmd_threadCount, getDefaultValue: () => Environment.ProcessorCount) { ArgumentHelpName = "number" };
         private readonly static Option<int> DownloadRetryCount = new(new string[] { "--download-retry-count" }, description: ResString.cmd_downloadRetryCount, getDefaultValue: () => 3) { ArgumentHelpName = "number" };
+        private readonly static Option<int> DownloadRetryTimeout = new(new string[] { "--download-retry-timeout" }, description: ResString.cmd_downloadRetryTimeout, getDefaultValue: () => 1000) { ArgumentHelpName = "number" };
         private readonly static Option<bool> SkipMerge = new(new string[] { "--skip-merge" }, description: ResString.cmd_skipMerge, getDefaultValue: () => false);
         private readonly static Option<bool> SkipDownload = new(new string[] { "--skip-download" }, description: ResString.cmd_skipDownload, getDefaultValue: () => false);
         private readonly static Option<bool> NoDateInfo = new(new string[] { "--no-date-info" }, description: ResString.cmd_noDateInfo, getDefaultValue: () => false);
@@ -478,6 +479,7 @@ namespace N_m3u8DL_RE.CommandLine
                     FFmpegBinaryPath = bindingContext.ParseResult.GetValueForOption(FFmpegBinaryPath),
                     KeyTextFile = bindingContext.ParseResult.GetValueForOption(KeyTextFile),
                     DownloadRetryCount = bindingContext.ParseResult.GetValueForOption(DownloadRetryCount),
+                    DownloadRetryTimeout = bindingContext.ParseResult.GetValueForOption(DownloadRetryTimeout),
                     BaseUrl = bindingContext.ParseResult.GetValueForOption(BaseUrl),
                     MuxImports = bindingContext.ParseResult.GetValueForOption(MuxImports),
                     ConcurrentDownload = bindingContext.ParseResult.GetValueForOption(ConcurrentDownload),
@@ -560,7 +562,7 @@ namespace N_m3u8DL_RE.CommandLine
 
             var rootCommand = new RootCommand(VERSION_INFO)
             {
-                Input, TmpDir, SaveDir, SaveName, BaseUrl, ThreadCount, DownloadRetryCount, AutoSelect, SkipMerge, SkipDownload, CheckSegmentsCount,
+                Input, TmpDir, SaveDir, SaveName, BaseUrl, ThreadCount, DownloadRetryCount, DownloadRetryTimeout, AutoSelect, SkipMerge, SkipDownload, CheckSegmentsCount,
                 BinaryMerge, DelAfterDone, NoDateInfo, NoLog, WriteMetaJson, AppendUrlParams, ConcurrentDownload, Headers, /**SavePattern,**/ SubOnly, SubtitleFormat, AutoSubtitleFix,
                 FFmpegBinaryPath,
                 LogLevel, UILanguage, UrlProcessorArgs, Keys, KeyTextFile, DecryptionBinaryPath, UseShakaPackager, MP4RealTimeDecryption,

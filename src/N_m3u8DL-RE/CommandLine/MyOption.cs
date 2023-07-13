@@ -65,6 +65,10 @@ namespace N_m3u8DL_RE.CommandLine
         /// </summary>
         public int DownloadRetryCount { get; set; }
         /// <summary>
+        /// See: <see cref="CommandInvoker.DownloadRetryTimeout"/>.
+        /// </summary>
+        public int DownloadRetryTimeout { get; set; }
+        /// <summary>
         /// See: <see cref="CommandInvoker.LiveRecordLimit"/>.
         /// </summary>
         public TimeSpan? LiveRecordLimit { get; set; }

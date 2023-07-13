@@ -166,6 +166,12 @@ namespace N_m3u8DL_RE.Common.Resource
                 zhTW: "每個分片下載異常時的重試次數",
                 enUS: "The number of retries when download segment error"
             ),
+            ["cmd_downloadRetryTimeout"] = new TextContainer
+            (
+                zhCN: "下载段错误时重试的超时",
+                zhTW: "下載段錯誤時重試之間的超時",
+                enUS: "The timeout between retries when download segment error"
+            ),
             ["cmd_decryptionBinaryPath"] = new TextContainer
             (
                 zhCN: "MP4解密所用工具的全路径, 例如 C:\\Tools\\mp4decrypt.exe",
